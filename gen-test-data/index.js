@@ -82,8 +82,8 @@ participation.push({
     user_id: admin.user.id,
     session_id: session.id,
     role_id: roles.find(rl => rl.name === 'MAYOR').id,
-    start: new Date("2020-01-01"),
-    end: new Date("2020-12-31")
+    start: new Date("2020-01-01T00:00-07:00"),
+    end: new Date("2020-12-31T23:59-07:00")
 });
 
 // spit out SQL statements from the arrays we just populated with objects
@@ -114,8 +114,8 @@ function createSession() {
     return {
         id: 1,
         name: '2020-summer-week1',
-        start: new Date("2020-07-05"),
-        end: new Date("2020-07-11")
+        start: new Date("2020-07-05T00:00-07:00"),
+        end: new Date("2020-07-11T23:59-07:00")
     };
 }
 
@@ -123,8 +123,8 @@ function createParticipation(session, user, isVol) {
     let userRoles = randRoles(isVol);
     return userRoles.map(r => {
 
-        let start = isVol ? faker.date.between("2020-07-05", "2020-07-10") : new Date("2020-07-06");
-        let end = isVol ? faker.date.between(start, "2020-07-11") : new Date("2020-07-11");
+        let start = isVol ? faker.date.between("2020-07-05T07:00-07:00", "2020-07-10T18:00-07:00") : new Date("2020-07-06T08:00-07:00");
+        let end = isVol ? faker.date.between(start, "2020-07-11T20:00-07:00") : new Date("2020-07-11T17:00-07:00");
 
         return {
             id: participationIdCount++,
