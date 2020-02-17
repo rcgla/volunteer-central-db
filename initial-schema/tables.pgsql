@@ -68,15 +68,15 @@ comment on table rcglavc."Sessions" is 'Session info and dates';
 
 create table rcglavc."Roles" (
     "id" serial primary key,
-    "name" text not null,
-    "desc" text
+    "code" text not null,
+    "name" text not null
 );
 comment on table rcglavc."Roles" is 'Roles at camp and year-round';
 
 create table rcglavc."RoleGroups" (
     "id" serial primary key,
-    "name" text not null,
-    "desc" text
+    "code" text not null,
+    "name" text not null
 );
 
 create table rcglavc."RolesInRoleGroups" (

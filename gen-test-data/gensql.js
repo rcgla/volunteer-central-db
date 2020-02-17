@@ -17,12 +17,12 @@ let SESSION_SQL = session => `insert into
     (${session.id}, $$${session.name}$$, $$${session.start.toISOString()}$$, $$${session.end.toISOString()}$$);`;
 
 let ROLE_SQL = role => `insert into 
-    rcglavc."Roles"("id", "name") 
-    values(${role.id}, $$${role.name}$$);`;
+    rcglavc."Roles"("id", "code", "name") 
+    values(${role.id}, $$${role.code}$$, $$${role.name}$$);`;
 
 let ROLE_GROUP_SQL = roleGroup => `insert into 
-    rcglavc."RoleGroups"("id", "name") 
-    values(${roleGroup.id}, $$${roleGroup.name}$$);`;
+    rcglavc."RoleGroups"("id", "code", "name") 
+    values(${roleGroup.id}, $$${roleGroup.code}$$, $$${roleGroup.name}$$);`;
 
 let ROLES_IN_ROLE_GROUPS_SQL = entry => `insert into 
     rcglavc."RolesInRoleGroups"("id", "role_id", "role_group_id")

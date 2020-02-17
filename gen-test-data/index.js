@@ -1,5 +1,5 @@
 const faker = require('faker');
-const { masterListOfRoles } = require('./roles');
+const { masterListOfRoles, masterListOfRoleGroups } = require('./roles');
 const {
     LOGIN_SQL,
     USER_SQL,
@@ -50,11 +50,9 @@ admin.login.type = 'ADMIN';
 // take the master list at the end of this file and 
 // make it into 3 separate arrays: roles, role groups, and the relationships between the items in the two sets
 // then it can go straight into the DB
-masterListOfRoles.map(roleGroup => {
-    let roles_ = roleGroup.roles
-        .filter(r => roles.find(role => role.name === r) === undefined)
-        .map(r=>createRole(r));
-    roles = roles.concat(roles_);
+roles = masterListOfRoles.map(role => createRole(role));
+
+masterListOfRoleGroups.map(roleGroup => {
     let roleGroup_ = createRoleGroup(roleGroup);
     roleGroups.push(roleGroup_);
     let rolesInRoleGroups_ = createRolesInRoleGroups(roleGroup);
@@ -81,7 +79,7 @@ participation.push({
     id: participationIdCount++,
     user_id: admin.user.id,
     session_id: session.id,
-    role_id: roles.find(rl => rl.name === 'MAYOR').id,
+    role_id: roles.find(rl => rl.code === 'MAYOR').id,
     start: new Date("2020-01-01T00:00-07:00"),
     end: new Date("2020-12-31T23:59-07:00")
 });
@@ -130,7 +128,7 @@ function createParticipation(session, user, isVol) {
             id: participationIdCount++,
             user_id: user.id,
             session_id: session.id,
-            role_id: roles.find(rl => rl.name === r).id,
+            role_id: roles.find(rl => rl.code === r).id,
             start: start,
             end: end
         }
@@ -140,22 +138,24 @@ function createParticipation(session, user, isVol) {
 function createRole(role) {
     return {
         id: roleId++,
-        name: role
+        name: role.name,
+        code: role.code
     };
 }
 
 function createRoleGroup(roleGroup) {
     return {
         id: roleGroupId++,
-        name: roleGroup.group
+        name: roleGroup.name,
+        code: roleGroup.code
     };
 }
 
 function createRolesInRoleGroups(roleGroup) {
-    return roleGroup.roles.map(role => ({
+    return roleGroup.roles.map(rolecode => ({
         id: rolesInRoleGroupsId++,
-        role_group_id: roleGroups.find(item => item.name === roleGroup.group).id,
-        role_id: roles.find(r => r.name == role).id
+        role_group_id: roleGroups.find(item => item.code === roleGroup.code).id,
+        role_id: roles.find(r => r.code == rolecode).id
     }));
 }
 function createUser() {
