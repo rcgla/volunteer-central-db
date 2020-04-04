@@ -16,6 +16,6 @@ To use it locally, you need PostgreSQL running in the background on your machine
 6. Make sure you have Node installed
 7. `cd gen-test-data`
 8. Run `npm install`
-9. Run the script `./run-to-reset-test-db.sh
+9. Run the script `./run-to-reset-test-db.sh`
 
 This will initialize a Volunteer Central database and fill it with fake data.
