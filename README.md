@@ -12,6 +12,9 @@ To use it locally, you need PostgreSQL running in the background on your machine
 2. Make sure that's up and running
 3. Open a terminal and go to the directory where you've cloned this repository. Make sure you're on the `dev` branch.
 4. Add execute permissions to the script (you just need to do this one time in your life) ```chmod u+x run-to-reset-test-db.sh```
-5. Run the script `./run-to-reset-test-db.sh`
+5. Clone the env file `cp example.env .env`
+6. Make sure you have Node installed
+7. Run `npm install`
+8. Run the script `./run-to-reset-test-db.sh
 
 This will initialize a Volunteer Central database and fill it with fake data.
