@@ -28,10 +28,12 @@ begin
             select a.* into usr
                 from rcglavc."Users" as a
                 where a.login_id = login.id;
-            if login.type = 'ADMIN' then
+            if usr.type = 'ADMIN' then
                 userrole := 'rcglavc_admin_role';
+            elsif usr.type = 'STAFF' then
+                userrole := 'rcglavc_staff_role';
             else
-                userrole := 'rcglavc_user_role';
+                userrole := 'rcglavc_client_role';
             end if;
             if login.active then 
                 update rcglavc."Logins" 
@@ -72,10 +74,12 @@ begin
             from rcglavc."Users" as a
             where a.login_id = login.id;
         
-        if login.type = 'ADMIN' then
+        if usr.type = 'ADMIN' then
             userrole := 'rcglavc_admin_role';
+        elsif usr.type = 'STAFF' then
+            userrole := 'rcglavc_staff_role';
         else
-            userrole := 'rcglavc_user_role';
+            userrole := 'rcglavc_client_role';
         end if;
         return (
             userrole,

@@ -11,10 +11,10 @@ wait
 cd ../
 
 cd gen-test-data
-npm run start
+#npm run start
 wait
 
 cd ../
-cp gen-test-data/out testdata.pgsql
+#cp gen-test-data/out testdata.pgsql
 wait
-psql --set=dbname="$DBNAME" < testdata.pgsql
+#psql --set=dbname="$DBNAME" < testdata.pgsql
