@@ -1,35 +1,30 @@
-\ir ./policies/locations.pgsql
-\ir ./policies/session_types.pgsql
-\ir ./policies/tracks.pgsql
-
-\ir ./policies/sessions.pgsql
-\ir ./policies/roles.pgsql
-\ir ./policies/role_groups.pgsql
-\ir ./policies/roles_in_role_groups.pgsql
-
-\ir ./policies/application_template.pgsql
-\ir ./policies/application_fields.pgsql
-
+\ir ./policies/tshirt-sizes.pgsql
 \ir ./policies/logins.pgsql
+\ir ./policies/users-private-info.pgsql
+\ir ./policies/users-protected-info.pgsql
 \ir ./policies/users.pgsql
+\ir ./policies/emergency-contacts.pgsql
 
-\ir ./policies/application_data.pgsql
-\ir ./policies/users_protected.pgsql
+\ir ./policies/activity-types.pgsql
+\ir ./policies/event-types.pgsql
+\ir ./policies/track-types.pgsql
+\ir ./policies/locations.pgsql
+\ir ./policies/rooms.pgsql
 
+\ir ./policies/events.pgsql
+\ir ./policies/tracks.pgsql
+\ir ./policies/activities.pgsql
+
+\ir ./policies/activities_rooms.pgsql
+\ir ./policies/events_locations.pgsql
+
+\ir ./policies/roles.pgsql
 \ir ./policies/photos.pgsql
-\ir ./policies/tuition.pgsql
-\ir ./policies/waivers.pgsql
-
-\ir ./policies/pickup_authorizations.pgsql
-\ir ./policies/emergency_contacts.pgsql
-\ir ./policies/invitations.pgsql
-
-\ir ./policies/schedule.pgsql
-\ir ./policies/camper_groups.pgsql
-\ir ./policies/camper_groups_and_schedule.pgsql
-\ir ./policies/users_in_camper_groups.pgsql
-
-\ir ./policies/user_availability.pgsql
-
-
 \ir ./policies/placements.pgsql
+\ir ./policies/user-availability.pgsql
+
+\ir ./policies/user-groups.pgsql
+\ir ./policies/user-group-types.pgsql
+\ir ./policies/users_user-groups.pgsql
+
+\ir ./policies/activities_roles.pgsql

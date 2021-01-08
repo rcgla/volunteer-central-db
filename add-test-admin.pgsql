@@ -1,21 +1,28 @@
+\c :dbname;
+-- this is a function because otherwise we can't use RETURNING ... INTO ... 
+do $$ 
+declare
+    new_id integer;
+begin 
+
 INSERT into rcglavc."Logins"(
-    "id",
-    "email",
+    "username",
     "password"
 )
 VALUES (
-    1,
-    'mayor@example.com',
+    'mayor',
     crypt('dancingpaint', gen_salt('bf'))
-);
+)
+RETURNING "id" INTO new_id;
 
 INSERT INTO rcglavc."Users"(
     "login_id",
     "name",
-    "type"
+    "user_type"
 )
 VALUES (
-    1,
+    new_id,
     'Mayor Beth',
     'ADMIN'
 );
+end $$;

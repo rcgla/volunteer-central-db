@@ -11,7 +11,7 @@ $$ language sql stable;
 
 -- Function: authenticate
 create or replace function rcglavc.authenticate(
-    email text,
+    username text,
     password text
 )
 returns rcglavc.jwt_token as $$
@@ -22,18 +22,20 @@ declare
 begin
     select a.* into login
         from rcglavc."Logins" as a
-        where a.email = authenticate.email;
+        where a.username = authenticate.username;
     if found then 
         if login.password = crypt(authenticate.password, login.password) then
             select a.* into usr
                 from rcglavc."Users" as a
                 where a.login_id = login.id;
-            if usr.type = 'ADMIN' then
+            if usr.user_type = 'ADMIN' then
                 userrole := 'rcglavc_admin_role';
-            elsif usr.type = 'STAFF' then
+            elsif usr.user_type = 'STAFF' then
                 userrole := 'rcglavc_staff_role';
-            else
+            elsif usr.user_type = 'CLIENT' then
                 userrole := 'rcglavc_client_role';
+            else
+                return null;
             end if;
             if login.active then 
                 update rcglavc."Logins" 
@@ -54,10 +56,10 @@ $$ language plpgsql VOLATILE strict security definer;
 -- Function: create_temporary_token
 -- access to this function should be restricted to admins
 -- this token will grant user-level access for 1 hour
--- the user must already be in the "Users" table and they also must have an entry
--- in "Logins" with suggested values of {type: 'USER', active: 'f', password: ''}
+-- the user must already be in the "Users" table and they also must have an entry in "Logins"
 create or replace function rcglavc.create_temporary_token(
-    email text
+    username text,
+    duration text
 )
 returns rcglavc.jwt_token as $$
 declare 
@@ -67,23 +69,25 @@ declare
 begin
     select a.* into login
         from rcglavc."Logins" as a
-        where a.email = create_temporary_token.email;
+        where a.username = create_temporary_token.username;
     
     if found then
         select a.* into usr
             from rcglavc."Users" as a
             where a.login_id = login.id;
         
-        if usr.type = 'ADMIN' then
+        if usr.user_type = 'ADMIN' then
             userrole := 'rcglavc_admin_role';
-        elsif usr.type = 'STAFF' then
+        elsif usr.user_type = 'STAFF' then
             userrole := 'rcglavc_staff_role';
-        else
+        elsif usr.user_type = 'CLIENT' then
             userrole := 'rcglavc_client_role';
+        else
+            return null;
         end if;
         return (
             userrole,
-            extract(epoch from now() + interval '1 hour'),
+            extract(epoch from now() + (create_temporary_token.duration)::interval),
             usr.id
         )::rcglavc.jwt_token;
     else
@@ -113,6 +117,10 @@ begin
 
             update rcglavc."Logins" set password=crypt(new_password, gen_salt('bf'))
             where rcglavc."Logins"."id" = login.id;
+
+            -- also set the login as 'active'
+            update rcglavc."Logins" set active=true 
+            where rcglavc."Logins"."id" = login.id;
             return true;
     else
         return false;
@@ -120,3 +128,24 @@ begin
     
 end;
 $$ language plpgsql VOLATILE strict security definer;
+
+create or replace function rcglavc.create_new_login(username text, pwd text, active boolean)
+returns int
+ as $$
+declare
+    new_id integer;
+    login rcglavc."Logins";
+begin
+    select a.* into login
+        from rcglavc."Logins" as a
+        where a.username = create_new_login.username;
+    if not found then 
+        insert into rcglavc."Logins" ("username", "password", "active")
+        values (create_new_login.username, crypt(create_new_login.pwd, gen_salt('bf')), active)
+        returning "id" into new_id;
+        return new_id;
+    else 
+        raise exception 'Username already exists %', create_new_login.username using hint = 'Please check the supplied username';
+    end if;
+end;
+$$ language plpgsql volatile;

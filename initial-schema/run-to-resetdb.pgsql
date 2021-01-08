@@ -6,10 +6,7 @@ create schema rcglavc;
 
 create type rcglavc.user_type as enum('CLIENT', 'STAFF', 'ADMIN');
 create type rcglavc.meal_type as enum('VEGETARIAN', 'VEGAN', 'OMNIVORE');
-create type rcglavc.schedule_visibility as enum('PUBLIC', 'CLIENT', 'STAFF', 'ADMIN');
-create type rcglavc.transport_type as enum ('TRUSTED_PARTY', 'PUBLIC_TRANSIT', 'DRIVES_SELF', 'RIDESHARE');
-create type rcglavc.waiver_type as enum ('MEDIA', 'LIABILITY', 'MEDICAL', 'COC', 'FREEDOM_OF_EXPRESSION', 'PICKUP_PERMISSION', 'OTHER');
-create type rcglavc.application_field_type as enum ('TEXT', 'NUMBER', 'DATETIME', 'BOOLEAN');
+create type rcglavc.handed_type as enum('LEFT', 'RIGHT', 'OTHER');
 
 /*
   JWT format
@@ -32,7 +29,10 @@ create type rcglavc.jwt_token as (
 
 
 \ir tables.pgsql
-\ir roles.pgsql
-\ir functions/auth.pgsql
--- \ir policies.pgsql
+\ir functions.pgsql
+\ir dbroles.pgsql
+\ir policies.pgsql
+\ir cascade-dbroles.pgsql
 \ir ../add-test-admin.pgsql
+
+insert into rcglavc."DbInfo"("field", "value") values ('version', '01');

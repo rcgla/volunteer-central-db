@@ -1,0 +1,1 @@
+grant select on table rcglavc."EventTypes" to rcglavc_client_role;

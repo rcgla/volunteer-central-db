@@ -1,0 +1,1 @@
+grant select on table rcglavc."Tracks" to rcglavc_client_role;

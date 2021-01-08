@@ -1,0 +1,1 @@
+grant select on rcglavc."Roles" to rcglavc_client_role;
