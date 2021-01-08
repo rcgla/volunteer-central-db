@@ -27,4 +27,4 @@
 \ir ./policies/user-group-types.pgsql
 \ir ./policies/users_user-groups.pgsql
 
-\ir ./policies/activities_roles.pgsql
+-- \ir ./policies/activities_roles.pgsql

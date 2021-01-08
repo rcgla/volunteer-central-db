@@ -27,4 +27,4 @@
 \ir ./tables/user-groups.pgsql
 \ir ./tables/users_user-groups.pgsql
 
-\ir ./tables/activities_roles.pgsql
+-- \ir ./tables/activities_roles.pgsql

@@ -14,7 +14,7 @@ begin
     -- triggers can be really slow and there's no reason to run them right now
     perform rcglavc.disable_triggers();
 
-    delete from rcglavc."ActivitiesRoles";
+    -- delete from rcglavc."ActivitiesRoles";
     
     delete from rcglavc."UserAvailability";
     delete from rcglavc."ActivitiesRooms";
