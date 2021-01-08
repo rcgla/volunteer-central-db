@@ -1,22 +1,12 @@
 # volunteer-central-db
 
-This is a PostgreSQL database. It is part of a set of projects related to RCGLA Volunteer Central:
+To setup locally:
 
-* [The database (this one)](https://github.com/rcgla/volunteer-central-db)
-* [The database API](https://github.com/rcgla/volunteer-central-db-api)
-* [The site](https://github.com/rcgla/volunteer-central-site)
-
-To use it locally, you need PostgreSQL running in the background on your machine. 
-
-1. Download and install a PostgreSQL environment, such as https://postgresapp.com/
-2. Make sure that's up and running
-3. Open a terminal and go to the directory where you've cloned this repository. Make sure you're on the `dev` branch.
-4. Add execute permissions to the script (you just need to do this one time in your life) ```chmod u+x run-to-reset-test-db.sh```
-5. Clone the env file `cp example.env .env`
-6. Make sure you have Node installed
-7. `cd gen-test-data`
-8. Run `npm install`
-9. Run the script `./run-to-reset-test-db.sh`
+1. Install PostgreSQL on your machine. There are many options, just google it.
+1. Clone the volunteer central [database project](https://github.com/rcgla/volunteer-central-db). 
+1. Switch to the `dev` branch
+1. Open a terminal and go to the directory where you've cloned it.
+1. Create a fresh (empty) database with `run-to-init-test-db.sh` 
 
 This will initialize a Volunteer Central database and create an admin login.
 
@@ -48,36 +38,6 @@ If this db were ever publicly query-able, we should adjust the settings for the 
 ## Data visibility
 
 Database uses row level security and access tokens; although the DB is never directly queried by the client, its design should withstand such usage should we decide to implement certain features with HTML + API instead of doing everything on the server.
-
-In the data descriptions below, assume that any table may contain any number of database IDs linking the row to other rows in other tables; however, these IDs are not meaningful on their own, so we don't have to worry about their visibility.
-
-Also, the role ADMIN is not enumerated below, as admins can view and edit everything.
-
-|Table | Data | Staff | Client | 
-|------|------|-------|--------|
-| Activities | What where when | View STAFF, CLIENT + role restrictions | View CLIENT + role restrictions |
-| ActivitiesRooms | - | View | View |
-| ActivityTypes | Enumeration | View | View |
-| DbInfo | Software version | - | - |
-| EmergencyContacts | Name, address, phone, relation | View & edit own | View & edit own |
-| EventTypes | Enumeration | View | View | View |
-| Events | What, times | View STAFF | View CLIENT |
-| Locations | Addresses for locations used by camp | View | View |
-| Logins | Usernames, hashed passwords | Edit own pwd | Edit own pwd |
-| Photos | Pics of ppl | View | View |
-| Placements | Confirmed, dropped | View | View |
-| Roles | Enumeration | View | View |
-| RoleGroups | Enumeration | View | View |
-| Rooms | Room number | View | View |
-| TrackTypes | Enumeration | View | View |
-| Tracks | Track name, times | View | View |
-| TshirtSizes | Enumeration | View | View |
-| UserAvailability | Times | View | View |
-| UserGroups | Group name | View | View |
-| UsersPrivateInfo | Phone, bio, address, email | View, edit own | View, edit own |
-| UsersProtectedInfo | Meal pref, tshirt size, food allergies, medical | View | View, edit own |
-| Users | Name, usertype | View | View |
----
 
 ### Activity and Event visibility
 
