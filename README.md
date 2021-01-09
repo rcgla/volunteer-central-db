@@ -6,6 +6,7 @@ To setup locally:
 1. Clone the volunteer central [database project](https://github.com/rcgla/volunteer-central-db). 
 1. Switch to the `dev` branch
 1. Open a terminal and go to the directory where you've cloned it.
+1. `cp example.env .env`
 1. Create a fresh (empty) database with `run-to-init-test-db.sh` 
 
 This will initialize a Volunteer Central database and create an admin login.
