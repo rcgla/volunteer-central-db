@@ -7,3 +7,5 @@ create table rcglavc."Photos" (
     foreign key ("user_id") references rcglavc."Users"("id"),
     foreign key ("event_id") references rcglavc."Events"("id")
 );
+comment on constraint "Photos_user_id_fkey" on rcglavc."Photos" is
+  E'@foreignFieldName photos';
